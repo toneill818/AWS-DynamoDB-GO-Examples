@@ -20,8 +20,10 @@ import(
 	Note: the key "id" is a primary key on the example table.
 */
 func main(){
+	// Create a dynamodb service and connect to the Region your DB is at
 	svc := dynamodb.New(&aws.Config{Region: "us-east-1"})
 
+	// This holds all of the values that will be inserted into the table
 	params := &dynamodb.PutItemInput{
 		Item: &map[string]*dynamodb.AttributeValue{
 			// This is our primary key for the item being inserted
@@ -54,6 +56,7 @@ func main(){
 		TableName: aws.String("example_table"),
 	}
 
+	// This will put Item map that was created above into the table. err is nil if no errors occured.
 	resp, err := svc.PutItem(params)
 
 	if awserr := aws.Error(err); awserr != nil {
